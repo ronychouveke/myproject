@@ -10,4 +10,4 @@ function naoPareDeContarImparesAte(numero){
            array.push(i)
        }return array.length
     }
-    console.log(naoPareDeContarImparesAte(25))
+    console.log(naoPareDeContarImparesAte(30))
