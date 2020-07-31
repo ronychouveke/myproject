@@ -5,8 +5,9 @@
 // }
 // console.log(aplicar(2,triplo))
 function naoPareDeContarImparesAte(numero){
-       for (var i=1; i<=numero;i++){
-           i+numero
-       }
-   }
-naoPareDeContarImparesAte(7)////
+    let array= []
+       for (var i=1; i<=numero;i+=2){
+           array.push(i)
+       }return array.length
+    }
+    console.log(naoPareDeContarImparesAte(25))
