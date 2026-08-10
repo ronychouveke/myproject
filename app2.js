@@ -5,7 +5,6 @@
 // OK 5) Adicionar remédios para o tratamento do animal
 // OK 6) Ter animais para adoção
 let animais = []
-let animaisParaAdocao = {}
 let animaisParaAdocaoMacho = []
 let animaisParaAdocaoFemea= []
 
@@ -13,13 +12,14 @@ function adotarAnimal(nome) {
     for(let i=0;i<animaisParaAdocaoMacho.length;i++) {
         if(animaisParaAdocaoMacho[i].nome === nome) {
             animaisParaAdocaoMacho.splice(i, 1)
-            splice(index, quantidadeQueEuQueroApagar)
+            return
         }
     }
 
     for(let i=0;i<animaisParaAdocaoFemea.length;i++) {
         if(animaisParaAdocaoFemea[i].nome === nome) {
             animaisParaAdocaoFemea.splice(i, 1)
+            return
         }
     }
 }
@@ -78,7 +78,7 @@ function adicionarValorDoTratamento(nome, valor) {
 }
 
 function informarQueOTratamentoFoiPago(nome) {
-    const indexDoAnimal = acharAnimal(nome, 'especie')
+    const indexDoAnimal = acharAnimal(nome, 'nome')
     animais[indexDoAnimal].foiPago = true
 
 }
@@ -102,7 +102,7 @@ function acharAnimal(valor, propriedade) {
 // adicionarValorDoTratamento('Belinha', 299)
 // adicionarValorDoTratamento('Belinha', 100)
 // informarQueAnimalFoiTratado('Belinha')
-// informarQueOTratamentoFoiPago('cachorro')
+// informarQueOTratamentoFoiPago('Belinha')
 // adicionarRemediosNoTratamento('Belinha', ['Dorflex', 'Água purificada'])
 // adicionarRemediosNoTratamento('Belinha', ['Vermifugo'])
 
