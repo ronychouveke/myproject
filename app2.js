@@ -5,7 +5,6 @@
 // OK 5) Adicionar remédios para o tratamento do animal
 // OK 6) Ter animais para adoção
 let animais = []
-let animaisParaAdocao = {}
 let animaisParaAdocaoMacho = []
 let animaisParaAdocaoFemea= []
 
@@ -13,13 +12,14 @@ function adotarAnimal(nome) {
     for(let i=0;i<animaisParaAdocaoMacho.length;i++) {
         if(animaisParaAdocaoMacho[i].nome === nome) {
             animaisParaAdocaoMacho.splice(i, 1)
-            splice(index, quantidadeQueEuQueroApagar)
+            return
         }
     }
 
     for(let i=0;i<animaisParaAdocaoFemea.length;i++) {
         if(animaisParaAdocaoFemea[i].nome === nome) {
             animaisParaAdocaoFemea.splice(i, 1)
+            return
         }
     }
 }
@@ -68,24 +68,39 @@ function cadastrarAnimal(nomeDoAnimal, especie, sintomas) {
 }
 
 function informarQueAnimalFoiTratado(nome) {
-    const indexDoAnimal = acharAnimal(nome, 'nome')
-    animais[indexDoAnimal].tratado = true
+    const animal = acharAnimalPorNome(nome)
+    if(animal === null) {
+        return
+    }
+
+    animal.tratado = true
 }
 
 function adicionarValorDoTratamento(nome, valor) {
-    const indexDoAnimal = acharAnimal(nome, 'nome')
-    animais[indexDoAnimal].valorDoTratamento += valor
+    const animal = acharAnimalPorNome(nome)
+    if(animal === null) {
+        return
+    }
+
+    animal.valorDoTratamento += valor
 }
 
 function informarQueOTratamentoFoiPago(nome) {
-    const indexDoAnimal = acharAnimal(nome, 'especie')
-    animais[indexDoAnimal].foiPago = true
+    const animal = acharAnimalPorNome(nome)
+    if(animal === null) {
+        return
+    }
 
+    animal.foiPago = true
 }
 
 function adicionarRemediosNoTratamento(nome, remedios) {
-    const indexDoAnimal = acharAnimal(nome, 'nome')
-    animais[indexDoAnimal].remedios.push(...remedios)
+    const animal = acharAnimalPorNome(nome)
+    if(animal === null) {
+        return
+    }
+
+    animal.remedios.push(...remedios)
 }
 
 function acharAnimal(valor, propriedade) {
@@ -94,6 +109,20 @@ function acharAnimal(valor, propriedade) {
             return i;
         }
     }
+
+    // Igual ao indexOf: -1 quando nao achou, nunca undefined
+    return -1
+}
+
+// Devolve o animal pelo nome, ou null (com aviso) se ele nao existe
+function acharAnimalPorNome(nome) {
+    const indexDoAnimal = acharAnimal(nome, 'nome')
+    if(indexDoAnimal === -1) {
+        console.log('Animal não encontrado: ' + nome)
+        return null
+    }
+
+    return animais[indexDoAnimal]
 }
 
 // cadastrarAnimal('Toto', 'gato', ['tontura', 'vômito', 'febre'])
@@ -102,7 +131,7 @@ function acharAnimal(valor, propriedade) {
 // adicionarValorDoTratamento('Belinha', 299)
 // adicionarValorDoTratamento('Belinha', 100)
 // informarQueAnimalFoiTratado('Belinha')
-// informarQueOTratamentoFoiPago('cachorro')
+// informarQueOTratamentoFoiPago('Belinha')
 // adicionarRemediosNoTratamento('Belinha', ['Dorflex', 'Água purificada'])
 // adicionarRemediosNoTratamento('Belinha', ['Vermifugo'])
 
