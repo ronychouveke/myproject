@@ -68,24 +68,39 @@ function cadastrarAnimal(nomeDoAnimal, especie, sintomas) {
 }
 
 function informarQueAnimalFoiTratado(nome) {
-    const indexDoAnimal = acharAnimal(nome, 'nome')
-    animais[indexDoAnimal].tratado = true
+    const animal = acharAnimalPorNome(nome)
+    if(animal === null) {
+        return
+    }
+
+    animal.tratado = true
 }
 
 function adicionarValorDoTratamento(nome, valor) {
-    const indexDoAnimal = acharAnimal(nome, 'nome')
-    animais[indexDoAnimal].valorDoTratamento += valor
+    const animal = acharAnimalPorNome(nome)
+    if(animal === null) {
+        return
+    }
+
+    animal.valorDoTratamento += valor
 }
 
 function informarQueOTratamentoFoiPago(nome) {
-    const indexDoAnimal = acharAnimal(nome, 'nome')
-    animais[indexDoAnimal].foiPago = true
+    const animal = acharAnimalPorNome(nome)
+    if(animal === null) {
+        return
+    }
 
+    animal.foiPago = true
 }
 
 function adicionarRemediosNoTratamento(nome, remedios) {
-    const indexDoAnimal = acharAnimal(nome, 'nome')
-    animais[indexDoAnimal].remedios.push(...remedios)
+    const animal = acharAnimalPorNome(nome)
+    if(animal === null) {
+        return
+    }
+
+    animal.remedios.push(...remedios)
 }
 
 function acharAnimal(valor, propriedade) {
@@ -94,6 +109,20 @@ function acharAnimal(valor, propriedade) {
             return i;
         }
     }
+
+    // Igual ao indexOf: -1 quando nao achou, nunca undefined
+    return -1
+}
+
+// Devolve o animal pelo nome, ou null (com aviso) se ele nao existe
+function acharAnimalPorNome(nome) {
+    const indexDoAnimal = acharAnimal(nome, 'nome')
+    if(indexDoAnimal === -1) {
+        console.log('Animal não encontrado: ' + nome)
+        return null
+    }
+
+    return animais[indexDoAnimal]
 }
 
 // cadastrarAnimal('Toto', 'gato', ['tontura', 'vômito', 'febre'])
